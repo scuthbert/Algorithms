@@ -1,0 +1,275 @@
+\documentclass[12pt]{article}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\parindent}{0in}
+\setlength{\parskip}{\baselineskip}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage[dvipsnames]{xcolor}
+
+\begin{document}
+\title{Algorithms Homework 1}
+
+CSCI 3104 Spring 2017 \hfill Problem Set 1\\
+Samuel Cuthbertson (06/16) 
+
+\hrulefill
+
+\begin{enumerate}
+
+	\item \textit{For each of the following claims, determine whether they are true or false. Justify your determination. If the claim is false, state the correct asymptotic relationship as $O$, $\Theta$, or $\Omega$.}
+    \begin{enumerate}
+	\item \textit{$n + 3 = O(n^3)$}
+    
+	\textbf{True:}
+    \begin{align*}
+    \lim_{n\to\infty} \frac{n+3}{n^3} &= \lim_{n\to\infty} \frac{\frac{\partial}{\partial n}(n+3)}{\frac{\partial}{\partial n}(n^3)} \\
+    &= \lim_{n\to\infty} \frac{1}{3n^2} \\
+    &= 0 \\
+    &\Rightarrow \mathbf{n+3 = O(n^3)}
+    \end{align*}
+	
+	\item \textit{$3^{2n} = O(3^n)$}
+	
+    \textbf{False}: 
+    \begin{align*}
+    \lim_{n\to\infty} \frac{3^{2n}}{3^n} &= \lim_{n\to\infty} \bigg(\frac{3^2}{3}\bigg)^n \\
+    &= \lim_{n\to\infty} 3^n \\
+    &= +\infty \\
+    &\Rightarrow \mathbf{3^{2n} = \Omega(3^n)}
+    \end{align*}
+    
+    \item \textit{$n^{n} = \Theta(n!)$} \textit{Help from Mathematica, used for numerically solving the limit.}
+	
+    \textbf{False}: 
+    \begin{align*}
+    \lim_{n\to\infty} \frac{n^n}{n!} &= \lim_{n\to\infty} \frac{n^n}{1*2*3*4*...*n} \\
+    &= +\infty \\
+    &\Rightarrow \mathbf{n^{n} = \Omega(n!)}
+    \end{align*}
+    
+    \item \textit{$\frac{1}{3n} = \Omega(1)$}
+	
+    \textbf{False}:
+    \begin{align*}
+    \lim_{n\to\infty} \frac{\frac{1}{3n}}{1} &= \lim_{n\to\infty} \frac{1}{3n} \\
+    &= 0 \\
+    &\Rightarrow \mathbf{\frac{1}{3n} = O(1)}
+    \end{align*}
+    
+    \item \textit{$\ln^3n = \Theta(\log^3n)$ Help from Luke Mezlar, Matt Maierhofer and Grant Baker.}
+    
+    \textbf{True:}
+	\begin{align*}
+    \lim_{n\to\infty} \frac{\ln^3n}{\log^3n} &= \lim_{n\to\infty} \frac{(\ln n)^3}{
+    (\log n)^3} \\
+    &= \lim_{n\to\infty} \bigg(\frac{\frac{\log n}{\log e}}{\log n}\bigg)^3 \\
+    &= \lim_{n\to\infty} 1 \\
+    &= 1 \\
+    &\Rightarrow \mathbf{\ln^3n = \Theta(\log^3n)}
+    \end{align*}
+    
+	\end{enumerate}
+	
+    \newpage
+	\item \textit{Simplify the following.}
+    \begin{enumerate}
+	\item \textit{$\frac{d}{dt}(2t^4 + \frac{1}{2}t^2 - 7)$}
+	\begin{align*}
+	\frac{d}{dt}(2t^4 + \frac{1}{2}t^2 - 7) &= \frac{d}{dt}(2t^4) + \frac{d}{dt}(\frac{1}{2}t^2) - \frac{d}{dt}(7) \\
+    &= \mathbf{8t^3 + t}
+	\end{align*}
+    
+	\item \textit{$\sum\limits_{i=0}^{k}2^i$}
+	
+    The leap of logic below came from my digital logic class, where the maximum value that can be stored in $n$ bits is the sum of the value of those bits, or $2^{n+1}-1$. The proof is as follows.
+    For $k=0$, note:
+    \begin{align*}
+    \sum\limits_{i=0}^{0}2^i &= 2^0 = 2^{0+1} - 1 \\
+    &= 1
+    \end{align*}
+	
+    Then for the inductive step:
+    \begin{align*}
+    \Bigg(\sum\limits_{i=0}^{k}2^i\Bigg) + (2^{k+1}) &= \sum\limits_{i=0}^{k+1}2^i \\
+    (2^{k+1}-1) + (2^{k+1}) &= 2^{k+2}-1 \\
+    2^{k+1} + 2^{k+1} - 1 &= 2^{k+2} - 1 \\
+    2^{k+2} - 1 &= 2^{k+2} - 1
+    \end{align*}
+    \textbf{Thus, $\mathbf{\sum\limits_{i=0}^{k}2^i = 2^{k+1}-1}$}
+
+    \item \textit{$\Theta(\sum\limits_{k=1}^{n}\frac{1}{k})$ Help from Appendix 1, A.7 which was mentioned in lecture.}
+    
+	\begin{align*}
+    \sum\limits_{k=1}^{n}\frac{1}{k} &= \ln(n) + O(1) \\
+    &\Rightarrow \Theta(\sum\limits_{k=1}^{n}\frac{1}{k}) = \Theta(\ln(n) + O(1)) \\
+    &\Rightarrow \mathbf{\Theta(\sum\limits_{k=1}^{n}\frac{1}{k}) = \Theta(\ln(n))}
+    \end{align*}
+    
+	\end{enumerate}
+	
+    \newpage
+    \item \textit{The young wizards Crabbe and Goyle are having an argument about an algorithm \textsc{A}. Crabbe claims, vehemently, that \textsc{A} has a running time of at least $O(n^2)$. Explain why Crabbe is spouting 
+nonsense.}
+    
+    \textbf{$\mathbf{O(n^2)}$ is an upper bound}, and having a running time of ``at least $O(n^2)$'' implies that $O(n^2)$ is the lower bound for running time. Having a Big-$O$ of `at least' anything is a nonsensical statement.
+    
+    \newpage
+    \item \textit{Using the mathematical definition of Big-$O$, answer the following.}
+    \begin{enumerate}
+    \item \textit{Is $2^{nk} = O(2^n)$ for $k > 1$? Help from Matt Maierhofer.}
+    
+    To prove this, we must use induction on the following statement.
+    \begin{align*}
+    2^{nk} &\leq c_2 2^n \qquad \exists c_2 > 0, \, \forall n\geq n_0 > 0, \, \forall k > 1 
+    \end{align*}
+	Starting with a base case of $k=2$:
+    \begin{align*}
+    \lim_{n\to\infty}\frac{2^{2n}}{2^n} &= \lim_{n\to\infty}\bigg(\frac{2^2}{2}\bigg)^n \\
+    &= \lim_{n\to\infty}2^n \\
+    &= +\infty \\
+    \Rightarrow 2^{nk} &\neq O(2^n) \qquad k = 2 
+    \end{align*}
+    We find that $\mathbf{2^{nk} \neq O(2^n)}$ for $k=2$, and therefor is also not equal $\forall k > 1$. \\
+
+    \item \textit{Is $2^{n+k} = O(2^n)$ for $k = O(1)$?}    
+
+    Following a similar approach to above, we use induction on the following. It's also worth noting that $k=O(1)$ holds true $\forall k>0$.
+    \begin{align*}
+    2^{n+k} &\leq c_2 2^n \qquad \exists c_2 > 0, \, \forall n\geq n_0 > 0, \, \forall k > 0 
+    \end{align*}
+    Starting with a base case of $k=1$:
+    \begin{align*}
+    \lim_{n\to\infty}\frac{2^{n+1}}{2^n} &= \lim_{n\to\infty}\frac{2^n*2^1}{2^n} \\
+    &= \lim_{n\to\infty}2 \\
+    &= 2 \\
+    \Rightarrow 2^{n+k} &= \Theta(2^n) = O(2^n) \qquad k = 1
+    \end{align*}
+    Then examining if the inductive step:
+    \begin{align*}
+    \lim_{n\to\infty}\frac{2^{n+k}}{2^n} * 2^1 &\stackrel{?}{=} \lim_{n\to\infty}\frac{2^{n+k+1}}{2^n} \\
+    2*\lim_{n\to\infty}\frac{2^n*2^k}{2^n} &\stackrel{?}{=} \lim_{n\to\infty}\frac{2^n*2^k*2^1}{2^n} \\
+    2*\lim_{n\to\infty}2^k &\stackrel{?}{=} \lim_{n\to\infty}2^k*2^1 \\
+    2*2^k &= 2*2^k
+    \end{align*}
+    \textbf{Therefor, $\mathbf{2^{n+k}}$ is bounded by $\mathbf{O(2^n)}$} and also $\Theta(2^n)$ for positive constant $k$.
+    
+    \end{enumerate}
+    
+    \newpage
+    \item \textit{Pseudocode for Linear Search}
+	\begin{verbatim}
+	linearSearch(A, v) {
+	    for(item from items in A, index of item i) {
+        if item == v { return i }
+    }
+    return NIL
+	}
+	\end{verbatim}
+    This solutions satisfies all three parts of a loop invariant: \\ \\
+    \textbf{Initialization:} When the function is called, $v$ is somewhere in $A[0...n]$ where n is the highest index in A. \\
+	\textbf{Maintenance:} On every iteration of the loop, $v$ is either the current item or is in $A[i...n]$. If it is the current value, then the loop terminates. If it is not, then the loop continues until all items in $A$ 
+have been checked. \\
+    \textbf{Termination:} The function either terminates from finding $v$, as mentioned above, or from exhausting all the items in $A$ and returning \textsf{NIL}.
+    
+    \newpage
+    \item \textit{Crabbe and Goyle are at it again. This time, Crabbe is claiming, vehemently, that when n real-valued numbers are arranged in sorted order in an input array A, it is always more efficient to use binary search to 
+find a target v in the array. Goyle claims, loudly and just as vehemently, that sometimes linear search, i.e., one that scans from $A[1]$ to $A[n]$ in order, can be faster. Explain who is correct.}
+	
+    \textbf{Goyle is correct.} The keywords here are `always' and `sometimes'. When searching for the lowest value in the array, linear search will always be faster as it completes in $O(1)$. However, when searching for the highest 
+value, binary search is clearly faster as it completes in $O(\log(n))$ rather than $O(n)$. Therefor, Goyle is correct that \textit{sometimes} linear search is faster.
+    
+    \newpage
+    \item \textit{Crabbe has written some code to apply a wizard function \textsl{w()} to some numbers, stored in an input array $A[i, j]$ for $1 \leq i, j \leq n$. Assume \textsl{w()} takes $O(1)$ time to compute. Determine the 
+asymptotic running time of Crabbe's function. Help from Luke Mezlar.}
+    
+    \begin{verbatim}
+0   wizardAllTheThings(A) {
+1       for i = 1 to n {
+2           for j = i/2 to n { 
+3               w(A[i,j]) 
+4           }
+5       }
+6       return
+7   }
+    \end{verbatim}
+    The loop on lines 1-5 will run everything inside it $n$ times, and the loop on lines 2-4 will run line 3 somewhere in between $\frac{1}{2}n$ and $n$ times. However, the $\frac{1}{2}$ for this loop has no bearing on the 
+asymptotic behavior of the function, as mentioned in lecture. Finally, since line 3 runs in $O(1)$, we have:
+    \begin{align*}
+    wizardAllTheThings(n) &= O(n) * O(n) * O(1) \\
+    wizardAllTheThings(n) &= \mathbf{O(n^2)}
+    \end{align*}
+    
+    
+    \newpage
+    \item \textit{Prove that for any two functions $f(n)$ and $g(n)$, we have $f(n)=\Theta(g(n)) \iff f(n) = O(g(n))$ and $f(n)=\Omega(g(n))$.}
+	
+    Note the definition of $f(n)=\Theta(g(n))$: 
+    \begin{align*}
+    \exists \big((\textcolor{red}{c_1},\textcolor{blue}{c_2},n_0)>0\big) \mid 0\leq \textcolor{red}{c_1 g(n) \leq}\,f(n)\,\textcolor{blue}{\leq c_2 g(n)}, \, \forall n\geq n_0
+    \end{align*}
+	Here I've highlighted the $\textcolor{red}{\Omega}$ parts and the $\textcolor{blue}{O}$ parts, and left the parts involved in both as black. The definitions can then clearly be found to ensure the if and only if statement 
+in the question, as shown below: 
+	\begin{align*}
+	\Omega \rightarrow \exists \big((c_1,n_0)>0\big) \mid 0\leq c_1 g(n) \leq f(n), \forall n\geq n_0 \\
+    O \rightarrow \exists \big((c_2,n_0)>0\big) \mid 0\leq f(n)\leq c_2 g(n), \, \forall n\geq n_0
+	\end{align*}
+    
+    \newpage
+    \item \textit{Crabbe and Goyle are now arguing about binary search. Goyle writes
+the following pseudocode on the board, which he claims implements a binary search
+for a target value $v$ within input array $A$ containing $n$ elements.}
+    \begin{verbatim}
+0    bSearch(A, v) {
+1        return binarySearch(A, 0, n, v)
+2    }
+3
+4    binarySearch(A, l, r, v) {
+5        if l >= r then return -1
+6        p = floor( (l + r)/2 )
+7        if A[p] == v then return m
+8        if A[m] < v then
+9            return binarySearch(A, m+1, r, v)
+10           else return binarySearch(A, l, m-1, v)
+11   }
+    \end{verbatim}
+	\begin{enumerate} 
+	\item \textit{Help Crabbe determine whether this code performs as correct binary search. If it does, prove to Goyle that the algorithm is correct. If it is not, state the bug(s), give line(s) of code that are correct, and 
+then prove to Goyle that your fixed algorithm is correct. Help from Luke Mezlar.}
+    
+    \textbf{Crabbe's code is not correct.} The biggest bug is every mention of `$m$' should be replaced with `$p$', as $m$ is never initialized. Additionally, on line 5 the $\geq$ should simply be an equals, as there is no 
+situation where $l>r$. Finally, since A is 0 indexed and has n-elements, the highest index is $n-1$, not $n$ as is on line 1. A correct version is as follows:
+    \begin{verbatim}
+0    bSearch(A, v) {
+1        return binarySearch(A, 0, n-1, v)
+2    }
+3
+4    binarySearch(A, l, r, v) {
+5        if l = r then return -1
+6        p = floor( (l + r)/2 )
+7        if A[p] == v then return p
+8        if A[p] < v then
+9            return binarySearch(A, p+1, r, v)
+10           else return binarySearch(A, l, p-1, v)
+11   }
+    \end{verbatim}
+    We can see that this version fulfills all three requirements of a loop invariant: \\
+    \textbf{Initialization:} Every time binarySearch is called, $v$ is somewhere in $A[l...r]$ or does not exist in A. \\
+	\textbf{Maintenance:} On every call of binarySearch, $v$ is either the item under consideration, to the left of the item under consideration, or to the right of the item under consideration. In the first case, $v$ is simply 
+returned. In the second case, binarySearch is called on the portion of $A$ to the left of $p$, with the initialization cases still holding true. Likewise for the the third case, only the portion of $A$ to the right instead of to 
+the left of $p$ is searched. \\
+    \textbf{Termination:} The function either terminates from finding $v$, as mentioned above, or from exhausting all the items in $A$ (when $l=r$, and the portion of the array being searched is only the item at $p$) and returning 
+\textsf{-1}. \\
+    
+    
+    \item \textit{Goyle tells Crabbe that binary search is efficient because, at worst, it divides the remaining problem size in half at each step. In response Crabbe claims that trinary search, which would divide the remaining 
+array A into thirds at each step, would be even more efficient. Explain who is correct and why} 
+    
+    \textbf{Goyle is correct}, because of how binary search is bounded by $O(\log_2n)$. The base two in that bound is famously given because of how binary search divides whatever it is searching by two at each step, which means 
+that trinary search would be bounded by $O(\log_3n)$. As shown in Problem 1e, the base of a logarithm has no affect on it's asymtotic behavior, which means trinary search is asymptotically the same as binary search. 
+	\end{enumerate}
+\end{enumerate}
+\end{document}
+
+
